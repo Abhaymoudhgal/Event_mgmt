@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Attendee List</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Attendee List</h1>
+        <a href="{% url 'attendee_create' %}" class="btn btn-primary mb-3">Add New Attendee</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for attendee in attendees %}
+                    <tr>
+                        <td>{{ attendee.name }}</td>
+                        <td>{{ attendee.email }}</td>
+                        <td>
+                            <a href="{% url 'attendee_edit' attendee.id %}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{% url 'attendee_delete' attendee.id %}" ```html
+                            method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm"> Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">No attendees found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <footer>
+        <p>&copy; Abhay G Moudhgal, 4th Sem, CSE, SJB Institute of Technology</p>
+    </footer>
+</body>
+</html>
